@@ -7,6 +7,7 @@ public class ButtonBuyItem : MonoBehaviour
 {
     [SerializeField] Text price;
     [SerializeField] Item itemToBuy;
+    [SerializeField] Button sell;
 
     Button button;
 
@@ -24,11 +25,22 @@ public class ButtonBuyItem : MonoBehaviour
 
     void OnItemBought(Item item)
     {
-        if (item == itemToBuy) HidePrice();
+        if (item == itemToBuy)
+        {
+            HidePrice();
+            sell.gameObject.SetActive(true);
+        }
     }
 
     void HidePrice()
     {
         price.gameObject.SetActive(false);
+    }
+
+    public void SellItem()
+    {
+        GameManager.instance.SellItem(itemToBuy);
+        sell.gameObject.SetActive(false);
+        price.gameObject.SetActive(true);
     }
 }
