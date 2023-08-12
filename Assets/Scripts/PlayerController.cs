@@ -4,8 +4,12 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
     [SerializeField] float speed;
     [SerializeField] Animator characterAnimator;
+
+    List<Animator> characterAnimators = new();
 
     bool canMove = true;
 
@@ -19,7 +23,10 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         rgbody = GetComponent<Rigidbody2D>();
+
+        characterAnimators.Add(characterAnimator);
     }
 
     // Update is called once per frame
@@ -41,12 +48,25 @@ public class PlayerController : MonoBehaviour
 
     void PlayerMovement()
     {
-        characterAnimator.SetFloat("Horizontal", horizontalInput);
-        characterAnimator.SetFloat("Vertical", verticalInput);
+        foreach (Animator anim in characterAnimators)
+        {
+            anim.SetFloat("Horizontal", horizontalInput);
+            anim.SetFloat("Vertical", verticalInput);
+        }
 
         movement.x = horizontalInput;
         movement.y = verticalInput;
 
         rgbody.velocity = movement * speed;
+    }
+
+    public void AddCharacterAnimator(Animator animator)
+    {
+        characterAnimators.Add(animator);
+    }
+
+    public void RemoveCharacterAnimator(Animator animator)
+    {
+        characterAnimators.Remove(animator);
     }
 }
