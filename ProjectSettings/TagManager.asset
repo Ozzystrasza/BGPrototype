@@ -11,8 +11,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Interactables
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
     locked: 0
   - name: Environment
     uniqueID: 222459157
+    locked: 0
+  - name: Interactables
+    uniqueID: 2046205391
     locked: 0
   - name: Player
     uniqueID: 3282785055
