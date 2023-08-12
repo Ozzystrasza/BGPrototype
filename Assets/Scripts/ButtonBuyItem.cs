@@ -16,11 +16,19 @@ public class ButtonBuyItem : MonoBehaviour
         button = GetComponent<Button>();
 
         button.onClick.AddListener(() => GameManager.instance.BuyItem(itemToBuy));
+
+        GameManager.instance.onItemBought.AddListener(OnItemBought);
+
+        price.text = "$" + itemToBuy.price;
     }
 
-    // Update is called once per frame
-    void Update()
+    void OnItemBought(Item item)
     {
+        if (item == itemToBuy) HidePrice();
+    }
 
+    void HidePrice()
+    {
+        price.gameObject.SetActive(false);
     }
 }

@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public int Gold { get => gold; set => gold = value; }
 
     [HideInInspector] public UnityEvent<int> onChangedGold;
+    [HideInInspector] public UnityEvent<Item> onItemBought;
 
     private void Awake()
     {
@@ -30,6 +31,17 @@ public class GameManager : MonoBehaviour
 
     public void BuyItem(Item item)
     {
+        if (!item.bought)
+        {
+            if (gold >= item.price)
+            {
+                item.bought = true;
+                SetGold(-item.price);
+                onItemBought.Invoke(item);
+            }
+            else return;
+        }
+
         switch (item.type)
         {
             case ItemType.clothes:
