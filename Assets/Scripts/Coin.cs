@@ -11,8 +11,12 @@ public class Coin : MonoBehaviour
 
     bool collected;
 
+    AudioSource audioSource;
+
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
+
         textValue.text = "+" + value;
     }
 
@@ -20,6 +24,7 @@ public class Coin : MonoBehaviour
     {
         if (collected) return;
 
+        audioSource.Play();
         GameManager.instance.SetGold(value);
         collected = true;
 
